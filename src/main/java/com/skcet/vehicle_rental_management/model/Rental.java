@@ -26,14 +26,14 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rentalId;
     @ManyToOne
-    @JoinColumn(name = "vehicle-id")
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
     private String customerName;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Double totalCost;
     @Enumerated(EnumType.STRING)
-    private RentalStatus status;
+    private RentalStatus rentalStatus;
     private String pickupLocation;
     private String returnLocation;
 }

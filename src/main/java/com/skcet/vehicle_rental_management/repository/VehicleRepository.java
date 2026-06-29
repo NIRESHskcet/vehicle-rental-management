@@ -1,8 +1,9 @@
 package com.skcet.vehicle_rental_management.repository;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface VehicleRepository {
+import com.skcet.vehicle_rental_management.model.Vehicle;
+
+public interface VehicleRepository extends JpaRepository<Vehicle,Long>{
 
 }
