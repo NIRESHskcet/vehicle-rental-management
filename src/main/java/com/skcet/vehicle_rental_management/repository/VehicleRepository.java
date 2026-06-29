@@ -6,4 +6,6 @@ import com.skcet.vehicle_rental_management.model.Vehicle;
 
 public interface VehicleRepository extends JpaRepository<Vehicle,Long>{
 
+    boolean existsByVehicleNumber(String vehicleNumber);
+
 }
