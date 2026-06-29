@@ -24,12 +24,12 @@ public class Vehicle {
     private Long vehicleId;
     private String vehicleNumber;
     @Enumerated(EnumType.STRING)
-    private VehicleType type;
+    private VehicleType vehicleType;
     private String model;
     private Integer year;
     private Double rentalPrice;
     private Boolean available;
     private String location;
     @Enumerated(EnumType.STRING)
-    private VehicleCondition condition;
+    private VehicleCondition vehicleCondition;
 }
