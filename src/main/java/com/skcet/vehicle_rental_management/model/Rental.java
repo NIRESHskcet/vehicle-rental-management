@@ -28,7 +28,9 @@ public class Rental {
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
-    private String customerName;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Double totalCost;

@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.skcet.vehicle_rental_management.model.Rental;
+import com.skcet.vehicle_rental_management.model.User;
 import com.skcet.vehicle_rental_management.model.Vehicle;
 import com.skcet.vehicle_rental_management.repository.RentalRepository;
+import com.skcet.vehicle_rental_management.repository.UserRepository;
 import com.skcet.vehicle_rental_management.repository.VehicleRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,12 +18,21 @@ import lombok.RequiredArgsConstructor;
 public class RentalServiceImpl implements RentalService{
     private final RentalRepository rentalRepository;
     private final VehicleRepository vehicleRepository;
+    private final UserRepository userRepository;
     
     @Override
     public Rental createRental(Rental request) {
-        if(!request.getVehicle().getAvailable()){
+        Vehicle vehicle = vehicleRepository.findById(request.getVehicle().getVehicleId())
+            .orElseThrow(()->new RuntimeException("vehicle id is not found"));
+        if(!vehicle.getAvailable()){
             throw new RuntimeException("vehicle rented");
         }
+        User user = userRepository.findById(request.getUser().getUserId())
+            .orElseThrow(()-> new RuntimeException("user id not found"));
+        request.setVehicle(vehicle);
+        request.setUser(user);
+        vehicle.setAvailable(false);
+        vehicleRepository.save(vehicle);
         return rentalRepository.save(request);
     }
 
@@ -41,8 +52,9 @@ public class RentalServiceImpl implements RentalService{
         Rental rental = rentalRepository.findById(id).orElseThrow(()->new RuntimeException("rental is not found with id" + id));
         Vehicle vehicle = vehicleRepository.findById(request.getVehicle().getVehicleId())
             .orElseThrow(()->new RuntimeException("vehicle not found"));
+        User user = userRepository.findById(id).orElseThrow(()->new RuntimeException("user not found"));
         rental.setVehicle(vehicle);
-        rental.setCustomerName(request.getCustomerName());
+        rental.setUser(user);
         rental.setStartTime(request.getStartTime());
         rental.setEndTime(request.getEndTime());
         rental.setTotalCost(request.getTotalCost());
