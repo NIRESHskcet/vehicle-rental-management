@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skcet.vehicle_rental_management.dto.request.UserRequestDTO;
+import com.skcet.vehicle_rental_management.dto.response.UserResponseDTO;
 import com.skcet.vehicle_rental_management.model.User;
 import com.skcet.vehicle_rental_management.service.UserService;
 
@@ -25,9 +27,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<Object> createUser(@RequestBody User request){
+    public ResponseEntity<Object> createUser(@RequestBody UserRequestDTO request){
         try{
-            User user = userService.createUser(request);
+            UserResponseDTO user = userService.createUser(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(user);
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -35,15 +37,15 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUser(){
-        List<User> users = userService.getAllUser();
+    public ResponseEntity<List<UserResponseDTO>> getAllUser(){
+        List<UserResponseDTO> users = userService.getAllUser();
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable Long id){
         try{
-            User user = userService.getUserById(id);
+            UserResponseDTO user = userService.getUserById(id);
             return ResponseEntity.status(HttpStatus.OK).body(user);
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

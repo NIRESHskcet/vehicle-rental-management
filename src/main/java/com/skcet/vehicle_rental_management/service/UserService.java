@@ -4,17 +4,19 @@ import java.util.List;
 
 import org.jspecify.annotations.Nullable;
 
+import com.skcet.vehicle_rental_management.dto.request.UserRequestDTO;
+import com.skcet.vehicle_rental_management.dto.response.UserResponseDTO;
 import com.skcet.vehicle_rental_management.model.User;
 
 /**
  * UserService
  */
 public interface UserService {
-    User createUser(User request);
+    UserResponseDTO createUser(UserRequestDTO request);
 
-    List<User> getAllUser();
+    List<UserResponseDTO> getAllUser();
 
-    User getUserById(Long id);
+    UserResponseDTO getUserById(Long id);
 
     User updateUser(Long id, User request);
 
