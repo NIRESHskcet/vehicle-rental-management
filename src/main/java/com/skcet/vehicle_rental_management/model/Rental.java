@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.skcet.vehicle_rental_management.enums.RentalStatus;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -33,6 +34,7 @@ public class Rental {
     private User user;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    @Schema(description = "cost of rental",example = "120.0")
     private Double totalCost;
     @Enumerated(EnumType.STRING)
     private RentalStatus rentalStatus;
