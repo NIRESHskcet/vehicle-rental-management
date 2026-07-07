@@ -16,14 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.skcet.vehicle_rental_management.model.Rental;
 import com.skcet.vehicle_rental_management.service.RentalService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rental")
+@Tag(name="Rental Management", description = "Operations related to rentals")
 public class RentalController {
     private final RentalService rentalService;
 
+    @Operation(method = "POST",description = "create new rental")
+    @ApiResponse(responseCode = "201", description = "new rental created")
     @PostMapping
     public ResponseEntity<Object> createRental(@RequestBody Rental request){
         try{
@@ -41,7 +48,9 @@ public class RentalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getRentalById(@PathVariable Long id){
+    public ResponseEntity<Object> getRentalById(
+        @Parameter(description = "retrive rental record using rental id" ,required=true,example = "1")
+        @PathVariable Long id){
         try {
             Rental rental = rentalService.getRentalById(id);
             return ResponseEntity.status(HttpStatus.OK).body(rental);
